@@ -32,13 +32,13 @@ public class SaleService {
 	
 	public List<SaleSumDTO> searchSaleSum(String minDate, String maxDate) {
 		LocalDate initialDate, lastDate;
-		if (maxDate == null) {
+		if (maxDate.equals("")) {
 			lastDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 		}
 		else {
 			lastDate = LocalDate.parse(maxDate);
 		}
-		if (minDate == null) {
+		if (minDate.equals("")) {
 			initialDate = lastDate.minusYears(1L);
 		}
 		else {
@@ -50,20 +50,17 @@ public class SaleService {
 	
 	public Page<SaleReportDTO> searchSaleReport(Pageable pageable, String minDate, String maxDate, String name) {
 		LocalDate initialDate, lastDate;
-		if (maxDate == null) {
+		if (maxDate.equals("")) {
 			lastDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 		}
 		else {
 			lastDate = LocalDate.parse(maxDate);
 		}
-		if (minDate == null) {
+		if (minDate.equals("")) {
 			initialDate = lastDate.minusYears(1L);
 		}
 		else {
 			initialDate = LocalDate.parse(minDate);
-		}
-		if (name == null) {
-			name = "";
 		}
 		Page<SaleReportDTO> result = repository.searchSaleReport(pageable, initialDate, lastDate, name);
 		return result;

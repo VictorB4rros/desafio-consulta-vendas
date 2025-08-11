@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
@@ -30,13 +31,13 @@ public class SaleController {
 	}
 
 	@GetMapping(value = "/report")
-	public ResponseEntity<Page<SaleReportDTO>> getReport(Pageable pageable, String minDate, String maxDate, String name) {
+	public ResponseEntity<Page<SaleReportDTO>> getReport(@RequestParam(name = "minDate", defaultValue = "") String minDate, @RequestParam(name = "maxDate", defaultValue = "") String maxDate, @RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
 		Page<SaleReportDTO> result = service.searchSaleReport(pageable, minDate, maxDate, name);
 		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping(value = "/summary")
-	public ResponseEntity<List<SaleSumDTO>> getSummary(String minDate, String maxDate) {
+	public ResponseEntity<List<SaleSumDTO>> getSummary(@RequestParam(name = "minDate", defaultValue = "") String minDate, @RequestParam(name = "maxDate", defaultValue = "") String maxDate) {
 		List<SaleSumDTO> result = service.searchSaleSum(minDate, maxDate);
 		return ResponseEntity.ok(result);
 	}
